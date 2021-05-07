@@ -6,12 +6,6 @@ import java.sql.Connection;
 
 public class Order {
 	
-	String order_date;
-	String project_id;
-	String project_name;
-	Integer sponsor_id;
-	String budget;
-	
 	//A common method to connect to the DB
 	private Connection connect() 
 	 { 
@@ -59,11 +53,13 @@ public class Order {
 			// execute the statement
 			preparedStmt.execute(); 
 			con.close(); 
-			output = "Order Inserted successfully";
+			
+			String newOrders = readOrders(); 
+			output = "{\"status\":\"success\", \"data\": \"" + newOrders + "\"}";
 			} 
 		catch (Exception e) 
 		{ 
-			output = "Error while inserting the order details."; 
+			output = "{\"status\":\"error\", \"data\":\"Error while inserting the order.\"}"; 
 			System.err.println(e.getMessage()); 
 			} 
 		return output; 
@@ -81,8 +77,13 @@ public class Order {
 			}
 			
 			// Prepare the html table to be displayed
-			output = "<table border='1'><tr><th>Order ID</th>" + "<th>Order Date</th>" + "<th>Project ID</th>" + 
-			"<th>Project name</th>" + "<th>Sponsor</th>" + "<th>Budget</th>" + "<th>Update</th><th>Remove</th></tr>";
+			output = "<table border='1'><tr><th>Order ID</th>" 
+			+ "<th>Order Date</th>" 
+					+ "<th>Project ID</th>" 
+			+ "<th>Project name</th>" 
+					+ "<th>Sponsor</th>" 
+			+ "<th>Budget</th>" 
+					+ "<th>Update</th><th>Remove</th></tr>";
 			
 			String query = "select * from orders"; 
 			Statement stmt = con.createStatement(); 
@@ -107,11 +108,15 @@ public class Order {
 				output += "<td>" + budget + "</td>";
 				
 				// buttons
-				output += "<td><input name='btnUpdate' type='button' value='Update' class='btn btn-secondary'></td>" 
-				+ "<td><form method='post' action='Orders.jsp'>" 
-						+ "<input name='btnRemove' type='submit' value='Remove' class='btn btn-danger'>" 
-				+ "<input name='itemID' type='hidden' value='" + orderID  
-				+ "'>" + "</form></td></tr>";
+				output += "<td><input name='btnUpdate'"
+						+ "type='button' value='Update'"
+						+ "class='btnUpdate btn btn-secondary' data-itemid='" 
+						+ orderID + "'></td>"
+						+ "<td><input name='btnRemove'"
+						+ "type='button' value='Remove'"
+						+ "class='btnRemove btn btn-danger'"
+						+ "data-orderid='"
+						+ orderID + "'>" + "</td></tr>";
 				
 			} 
 	 con.close(); 
@@ -152,12 +157,14 @@ public class Order {
 			// execute the statement
 			preparedStmt.execute(); 
 			con.close(); 
-			output = "Order Updated successfully";
+			
+			String newOrders = readOrders(); 
+			output = "{\"status\":\"success\", \"data\": \"" + newOrders + "\"}"; 
 			
 		 } 
 		 catch (Exception e) 
 		 { 
-			 output = "Error while updating the order details."; 
+			 output = "{\"status\":\"error\", \"data\":\"Error while updating the order details.\"}";  
 			 System.err.println(e.getMessage()); 
 		 } 
 		
@@ -185,12 +192,14 @@ public class Order {
 				// execute the statement
 				preparedStmt.execute(); 
 				con.close(); 
-				output = "Order Deleted successfully"; 
+				
+				String newOrders = readOrders(); 
+				output = "{\"status\":\"success\", \"data\": \"" + newOrders + "\"}"; 
 					
 			} 
 			catch (Exception e) 
 			{ 
-				output = "Error while deleting the order details."; 
+				output = "{\"status\":\"error\", \"data\":\"Error while deleting the order details.\"}"; 
 				System.err.println(e.getMessage()); 
 			} 
 			

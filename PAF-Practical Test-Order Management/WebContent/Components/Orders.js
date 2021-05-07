@@ -6,7 +6,7 @@ $.ajax(
  dataType : "text",
  complete : function(response, status)
  {
- onItemSaveComplete(response.responseText, status);
+ onOrderSaveComplete(response.responseText, status);
  }
 });
 
@@ -35,7 +35,7 @@ if (status != true)
  return;
  }
 // If valid------------------------
-var type = ($("#hidItemIDSave").val() == "") ? "POST" : "PUT";
+var type = ($("#hidOrderIDSave").val() == "") ? "POST" : "PUT";
  $.ajax(
  {
  url : "OrderAPI",
@@ -44,18 +44,19 @@ var type = ($("#hidItemIDSave").val() == "") ? "POST" : "PUT";
  dataType : "text",
  complete : function(response, status)
  {
- onItemSaveComplete(response.responseText, status);
+ onOrderSaveComplete(response.responseText, status);
  }
  });
 });
 // UPDATE==========================================
 $(document).on("click", ".btnUpdate", function(event)
 {
-$("#hidItemIDSave").val($(this).data("itemid"));
- $("#itemCode").val($(this).closest("tr").find('td:eq(0)').text());
- $("#itemName").val($(this).closest("tr").find('td:eq(1)').text());
- $("#itemPrice").val($(this).closest("tr").find('td:eq(2)').text());
- $("#itemDesc").val($(this).closest("tr").find('td:eq(3)').text());
+$("#hidOrderIDSave").val($(this).data("orderID"));
+ $("#order_date").val($(this).closest("tr").find('td:eq(0)').text());
+ $("#project_id").val($(this).closest("tr").find('td:eq(1)').text());
+ $("#project_name").val($(this).closest("tr").find('td:eq(2)').text());
+ $("#sponsor_id").val($(this).closest("tr").find('td:eq(3)').text());
+$("#budget").val($(this).closest("tr").find('td:eq(4)').text());
 });
 //DELETE===================================================
 $(document).on("click", ".btnRemove", function(event)
@@ -64,49 +65,55 @@ $(document).on("click", ".btnRemove", function(event)
  {
  url : "OrderAPI",
  type : "DELETE",
- data : "itemID=" + $(this).data("itemid"),
+ data : "orderID=" + $(this).data("orderID"),
  dataType : "text",
  complete : function(response, status)
  {
- onItemDeleteComplete(response.responseText, status);
+ onOrderDeleteComplete(response.responseText, status);
  }
  });
 });
 // CLIENT-MODEL================================================================
-function validateItemForm()
+function validateOrderForm()
 {
-// CODE
-if ($("#itemCode").val().trim() == "")
+// ORDER DATE
+if ($("#order_date").val().trim() == "")
  {
- return "Insert Item Code.";
+ return "Insert Order Date.";
  }
-// NAME
-if ($("#itemName").val().trim() == "")
+// PROJECT ID
+if ($("#project_id").val().trim() == "")
  {
- return "Insert Item Name.";
+ return "Insert Project ID.";
  }
-// PRICE-------------------------------
-if ($("#itemPrice").val().trim() == "")
+// PROJECT NAME
+if ($("#project_name").val().trim() == "")
  {
- return "Insert Item Price.";
+ return "Insert Project Name.";
+ }
+// SPONSOR ID
+if ($("#sponsor_id").val().trim() == "")
+ {
+ return "Insert Sponsor ID.";
+ }
+// BUDGET-------------------------------
+if ($("#budget").val().trim() == "")
+ {
+ return "Insert Budget.";
  }
 // is numerical value
-var tmpPrice = $("#itemPrice").val().trim();
-if (!$.isNumeric(tmpPrice))
+var tmpBudget = $("#budget").val().trim();
+if (!$.isNumeric(tmpBudget))
  {
- return "Insert a numerical value for Item Price.";
+ return "Insert a numerical value for Budget.";
  }
 // convert to decimal price
- $("#itemPrice").val(parseFloat(tmpPrice).toFixed(2));
-// DESCRIPTION------------------------
-if ($("#itemDesc").val().trim() == "")
- {
- return "Insert Item Description.";
- }
+ $("#budget").val(parseFloat(tmpBudget).toFixed(2));
+
 return true;
 }
 //============================================================
-function onItemSaveComplete(response, status)
+function onOrderSaveComplete(response, status)
 {
 if (status == "success")
  {
@@ -115,7 +122,7 @@ if (status == "success")
  {
  $("#alertSuccess").text("Successfully saved.");
  $("#alertSuccess").show();
- $("#divItemsGrid").html(resultSet.data);
+ $("#divOrdersGrid").html(resultSet.data);
  } else if (resultSet.status.trim() == "error")
  {
  $("#alertError").text(resultSet.data);
@@ -130,11 +137,11 @@ if (status == "success")
  $("#alertError").text("Unknown error while saving..");
  $("#alertError").show();
  } 
- $("#hidItemIDSave").val("");
- $("#formItem")[0].reset();
+ $("#hidOrderIDSave").val("");
+ $("#formOrder")[0].reset();
 }
 //==========================================================
-function onItemDeleteComplete(response, status)
+function onOrderDeleteComplete(response, status)
 {
 if (status == "success")
  {
@@ -143,7 +150,7 @@ if (status == "success")
  {
  $("#alertSuccess").text("Successfully deleted.");
  $("#alertSuccess").show();
- $("#divItemsGrid").html(resultSet.data);
+ $("#divOrdersGrid").html(resultSet.data);
  } else if (resultSet.status.trim() == "error")
  {
  $("#alertError").text(resultSet.data);

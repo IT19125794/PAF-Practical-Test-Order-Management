@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.Order;
+import com.OrderService;
+
 /**
  * Servlet implementation class OrderAPI
  */
@@ -40,6 +43,7 @@ public class OrderAPI extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		Order orderObj = new Order();
 		String output = orderObj.insertOrder(request.getParameter("order_date"), 
 				 request.getParameter("project_id"), 
 				request.getParameter("project_name"),
@@ -54,7 +58,9 @@ public class OrderAPI extends HttpServlet {
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		Map paras = getParasMap(request); 
-		 String output = orderObj.updateOrder(paras.get("hidOrderIDSave").toString(), 
+		
+		Order orderObj = new Order();
+		String output = orderObj.updateOrder(paras.get("hidOrderIDSave").toString(), 
 				 paras.get("order_date").toString(), 
 				 paras.get("project_id").toString(), 
 				 paras.get("project_name").toString(), 
@@ -70,6 +76,8 @@ public class OrderAPI extends HttpServlet {
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		Map paras = getParasMap(request); 
+		
+		Order orderObj = new Order();
 		String output = orderObj.deleteOrder(paras.get("order_ID").toString()); 
 		response.getWriter().write(output);
 	}
