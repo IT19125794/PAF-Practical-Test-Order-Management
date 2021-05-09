@@ -14,20 +14,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.Order;
-import com.OrderService;
 
 /**
- * Servlet implementation class OrderAPI
+ * Servlet implementation class OrdersAPI
  */
-@WebServlet("/OrderAPI")
-public class OrderAPI extends HttpServlet {
+@WebServlet("/OrdersAPI")
+public class OrdersAPI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	// initialize a server-model class object
+		Order orderObj = new Order();
     /**
      * Default constructor. 
      */
-    public OrderAPI() {
+    public OrdersAPI() {
         // TODO Auto-generated constructor stub
+    	super();
     }
 
 	/**
@@ -43,12 +45,11 @@ public class OrderAPI extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		Order orderObj = new Order();
-		String output = orderObj.insertOrder(request.getParameter("order_date"), 
-				 request.getParameter("project_id"), 
-				request.getParameter("project_name"),
-				request.getParameter("sponsor_id"),
-				request.getParameter("budget")); 
+		String output = orderObj.insertOrder(request.getParameter("Order_date"), 
+				 request.getParameter("Project_ID"), 
+				request.getParameter("Project_name"),
+				request.getParameter("Sponsor_ID"),
+				request.getParameter("Budget")); 
 				response.getWriter().write(output);
 	}
 
@@ -59,13 +60,12 @@ public class OrderAPI extends HttpServlet {
 		// TODO Auto-generated method stub
 		Map paras = getParasMap(request); 
 		
-		Order orderObj = new Order();
 		String output = orderObj.updateOrder(paras.get("hidOrderIDSave").toString(), 
-				 paras.get("order_date").toString(), 
-				 paras.get("project_id").toString(), 
-				 paras.get("project_name").toString(), 
-				 paras.get("sponsor_id").toString(),
-		 		 paras.get("budget").toString());
+				 paras.get("Order_date").toString(), 
+				 paras.get("Project_ID").toString(), 
+				 paras.get("Project_name").toString(), 
+				 paras.get("Sponsor_ID").toString(),
+		 		 paras.get("Budget").toString());
 		 
 		response.getWriter().write(output);
 	}
@@ -77,8 +77,7 @@ public class OrderAPI extends HttpServlet {
 		// TODO Auto-generated method stub
 		Map paras = getParasMap(request); 
 		
-		Order orderObj = new Order();
-		String output = orderObj.deleteOrder(paras.get("order_ID").toString()); 
+		String output = orderObj.deleteOrder(paras.get("Order_ID").toString()); 
 		response.getWriter().write(output);
 	}
 

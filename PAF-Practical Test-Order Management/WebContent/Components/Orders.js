@@ -1,6 +1,6 @@
 $.ajax(
 {
- url : "OrderAPI",
+ url : "OrdersAPI",
  type : type,
  data : $("#formOrder").serialize(),
  dataType : "text",
@@ -38,7 +38,7 @@ if (status != true)
 var type = ($("#hidOrderIDSave").val() == "") ? "POST" : "PUT";
  $.ajax(
  {
- url : "OrderAPI",
+ url : "OrdersAPI",
  type : type,
  data : $("#formOrder").serialize(),
  dataType : "text",
@@ -51,21 +51,21 @@ var type = ($("#hidOrderIDSave").val() == "") ? "POST" : "PUT";
 // UPDATE==========================================
 $(document).on("click", ".btnUpdate", function(event)
 {
-$("#hidOrderIDSave").val($(this).data("orderID"));
- $("#order_date").val($(this).closest("tr").find('td:eq(0)').text());
- $("#project_id").val($(this).closest("tr").find('td:eq(1)').text());
- $("#project_name").val($(this).closest("tr").find('td:eq(2)').text());
- $("#sponsor_id").val($(this).closest("tr").find('td:eq(3)').text());
-$("#budget").val($(this).closest("tr").find('td:eq(4)').text());
+ $("#hidOrderIDSave").val($(this).data("Order_ID"));
+ $("#Order_date").val($(this).closest("tr").find('td:eq(0)').text());
+ $("#Project_ID").val($(this).closest("tr").find('td:eq(1)').text());
+ $("#Project_name").val($(this).closest("tr").find('td:eq(2)').text());
+ $("#Sponsor_ID").val($(this).closest("tr").find('td:eq(3)').text());
+$("#Budget").val($(this).closest("tr").find('td:eq(4)').text());
 });
 //DELETE===================================================
 $(document).on("click", ".btnRemove", function(event)
 {
  $.ajax(
  {
- url : "OrderAPI",
+ url : "OrdersAPI",
  type : "DELETE",
- data : "orderID=" + $(this).data("orderID"),
+ data : "Order_ID=" + $(this).data("Order_ID"),
  dataType : "text",
  complete : function(response, status)
  {
@@ -77,38 +77,38 @@ $(document).on("click", ".btnRemove", function(event)
 function validateOrderForm()
 {
 // ORDER DATE
-if ($("#order_date").val().trim() == "")
+if ($("#Order_date").val().trim() == "")
  {
  return "Insert Order Date.";
  }
 // PROJECT ID
-if ($("#project_id").val().trim() == "")
+if ($("#Project_ID").val().trim() == "")
  {
  return "Insert Project ID.";
  }
 // PROJECT NAME
-if ($("#project_name").val().trim() == "")
+if ($("#Project_name").val().trim() == "")
  {
  return "Insert Project Name.";
  }
 // SPONSOR ID
-if ($("#sponsor_id").val().trim() == "")
+if ($("#Sponsor_ID").val().trim() == "")
  {
  return "Insert Sponsor ID.";
  }
 // BUDGET-------------------------------
-if ($("#budget").val().trim() == "")
+if ($("#Budget").val().trim() == "")
  {
  return "Insert Budget.";
  }
 // is numerical value
-var tmpBudget = $("#budget").val().trim();
+var tmpBudget = $("#Budget").val().trim();
 if (!$.isNumeric(tmpBudget))
  {
  return "Insert a numerical value for Budget.";
  }
 // convert to decimal price
- $("#budget").val(parseFloat(tmpBudget).toFixed(2));
+ $("#Budget").val(parseFloat(tmpBudget).toFixed(2));
 
 return true;
 }

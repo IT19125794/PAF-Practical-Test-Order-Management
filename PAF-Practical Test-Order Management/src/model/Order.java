@@ -27,7 +27,7 @@ public class Order {
 	 return con; 
 	 } 
 	
-	public String insertOrder(String order_date, String project_id, String project_name, Integer sponsor_id, String budget) 
+	public String insertOrder(String Order_date, String Project_ID, String Project_name, String Sponsor_ID, String Budget) 
 	{ 
 		String output = ""; 
 		try
@@ -44,11 +44,11 @@ public class Order {
 			
 			// binding values
 			preparedStmt.setInt(1, 0);
-			preparedStmt.setString(2, order_date);
-			preparedStmt.setString(3, project_id);
-			preparedStmt.setString(4, project_name);
-			preparedStmt.setInt(5, sponsor_id);
-			preparedStmt.setDouble(6, Double.parseDouble(budget));
+			preparedStmt.setString(2, Order_date);
+			preparedStmt.setString(3, Project_ID);
+			preparedStmt.setString(4, Project_name);
+			preparedStmt.setString(5, Sponsor_ID);
+			preparedStmt.setDouble(6, Double.parseDouble(Budget));
 	 
 			// execute the statement
 			preparedStmt.execute(); 
@@ -92,31 +92,30 @@ public class Order {
 			// iterate through the rows in the result set
 			while (rs.next()) 
 			{ 
-				String orderID = Integer.toString(rs.getInt("Order_ID"));
-				String order_date = rs.getString("Order_date");
-				String project_id = rs.getString("Project_ID"); 
-				String project_name = rs.getString("Project_name");
-				String sponsor_id = Integer.toString(rs.getInt("Sponsor_ID"));
-				String budget = Double.toString(rs.getDouble("Budget"));
+				String Order_ID = Integer.toString(rs.getInt("Order_ID"));
+				String Order_date = rs.getString("Order_date");
+				String Project_ID = rs.getString("Project_ID"); 
+				String Project_name = rs.getString("Project_name");
+				String Sponsor_ID = Integer.toString(rs.getInt("Sponsor_ID"));
+				String Budget = Double.toString(rs.getDouble("Budget"));
 				
 				// Add into the html table
-				output += "<tr><td>" + orderID + "</td>";
-				output += "<td>" + order_date + "</td>";
-				output += "<td>" + project_id + "</td>"; 
-				output += "<td>" + project_name + "</td>"; 
-				output += "<td>" + sponsor_id + "</td>";
-				output += "<td>" + budget + "</td>";
+				output += "<tr><td>" + Order_ID + "</td>";
+				output += "<td>" + Order_date + "</td>";
+				output += "<td>" + Project_ID + "</td>"; 
+				output += "<td>" + Project_name + "</td>"; 
+				output += "<td>" + Sponsor_ID + "</td>";
+				output += "<td>" + Budget + "</td>";
 				
 				// buttons
 				output += "<td><input name='btnUpdate'"
 						+ "type='button' value='Update'"
-						+ "class='btnUpdate btn btn-secondary' data-itemid='" 
-						+ orderID + "'></td>"
+						+ "class='btnUpdate btn btn-secondary'></td>"
 						+ "<td><input name='btnRemove'"
 						+ "type='button' value='Remove'"
 						+ "class='btnRemove btn btn-danger'"
 						+ "data-orderid='"
-						+ orderID + "'>" + "</td></tr>";
+						+ Order_ID + "'>" + "</td></tr>";
 				
 			} 
 	 con.close(); 
@@ -131,7 +130,7 @@ public class Order {
 	 return output; 
 	 } 
 	
-	public String updateOrder(String orderID, String order_date, String project_id, String project_name, String sponsor_id, String budget)
+	public String updateOrder(String Order_ID, String Order_date, String Project_ID, String Project_name, String Sponsor_ID, String Budget)
 	{
 		String output = ""; 
 		try
@@ -147,12 +146,12 @@ public class Order {
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 			
 			// binding values
-			preparedStmt.setString(1, order_date);
-			preparedStmt.setString(2, project_id);
-			preparedStmt.setString(3, project_name);
-			preparedStmt.setInt(4, Integer.parseInt(sponsor_id));
-			preparedStmt.setDouble(5, Double.parseDouble(budget));
-			preparedStmt.setInt(6, Integer.parseInt(orderID));
+			preparedStmt.setString(1, Order_date);
+			preparedStmt.setString(2, Project_ID);
+			preparedStmt.setString(3, Project_name);
+			preparedStmt.setString(4, Sponsor_ID);
+			preparedStmt.setDouble(5, Double.parseDouble(Budget));
+			preparedStmt.setInt(6, Integer.parseInt(Order_ID));
 			
 			// execute the statement
 			preparedStmt.execute(); 
@@ -171,7 +170,7 @@ public class Order {
 		return output;
     } 
 	
-		public String deleteOrder(String orderID) 
+		public String deleteOrder(String Order_ID) 
 		{ 
 			String output = "";
 			try
@@ -187,7 +186,7 @@ public class Order {
 				PreparedStatement preparedStmt = con.prepareStatement(query);
 				
 				// binding values
-				preparedStmt.setInt(1, Integer.parseInt(orderID));
+				preparedStmt.setInt(1, Integer.parseInt(Order_ID));
 				
 				// execute the statement
 				preparedStmt.execute(); 
