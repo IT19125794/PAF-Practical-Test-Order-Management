@@ -1,4 +1,5 @@
 <%@ page import="model.Order" %>
+<%@ page import="com.OrderService" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -43,6 +44,7 @@
 	
 			<div id="alertSuccess" class="alert alert-success"></div>
 				<div id="alertError" class="alert alert-danger"></div>
+				</div> 
 				<br>
 					<div id="divOrdersGrid" class="col-12">
  						<%
@@ -50,7 +52,7 @@
  							out.print(orderObj.readOrders());
  						%>
 					</div>
-			</div> 
+			
 		</div> 
 	</div>
 

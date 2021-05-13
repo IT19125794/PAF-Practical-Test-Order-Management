@@ -33,7 +33,7 @@ public class OrderService {
 	public String insertOrder(@FormParam("Order_date") String order_date,
 	 @FormParam("Project_ID") String project_id, 
 	 @FormParam("Project_name") String project_name,
-	 @FormParam("Sponsor_ID") Integer sponsor_id,
+	 @FormParam("Sponsor_ID") String sponsor_id,
 	 @FormParam("Budget") String budget) 
 	{ 
 	 String output = orderObj.insertOrder( order_date, project_id, project_name, sponsor_id, budget); 
